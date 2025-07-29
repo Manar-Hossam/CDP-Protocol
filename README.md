@@ -1,85 +1,61 @@
 # CDP Protocol Network Project
 
-## 📌 Project Overview
-This project demonstrates the **Cisco Discovery Protocol (CDP)** in a multi-switch and multi-VLAN network using two Multilayer Switches (MLS).  
-The network is designed to allow **device discovery**, **VLAN segmentation**, and **inter-VLAN routing**.
+This project demonstrates how to use **Cisco Discovery Protocol (CDP)** to discover connected devices in a multi-switch network.  
+The network consists of **2 Multilayer Switches (MLS)** and **4 Access Switches** connected in a hierarchical topology.
 
 ---
 
-## 🖥️ Network Topology
-![Network Topology](topology.png)
+## 📌 Project Topology
 
-*(The detailed topology image is attached with the project)*
-
-- **MLS0 (Core-1)** connected to Switch0 & Switch1
-- **MLS1 (Core-2)** connected to Switch2 & Switch3
-- Each VLAN has a dedicated host to test inter-VLAN communication
-- CDP protocol is used to discover connected devices
+![Network Topology](topology.png)  
+*Figure: Network Topology – CDP Protocol*  
 
 ---
 
-## 🔹 VLAN Configuration
+## 📊 Devices & IP Configuration
 
-| VLAN | Name       | IP on MLS        |
-|------|-----------|-----------------|
-| 10   | VLAN0010  | 192.168.10.1    |
-| 20   | VLAN0020  | 192.168.20.1    |
-| 30   | VLAN0030  | 192.168.30.1    |
-| 40   | VLAN0040  | 192.168.40.1    |
+| Device          | Interface VLAN | IP Address       |
+|-----------------|----------------|-----------------|
+| MLS-Core-1      | VLAN 10        | 192.168.10.1    |
+| MLS-Core-1      | VLAN 20        | 192.168.20.1    |
+| MLS-Core-2      | VLAN 30        | 192.168.30.1    |
+| MLS-Core-2      | VLAN 40        | 192.168.40.1    |
+| Access-SW10     | VLAN 10        | 192.168.10.10   |
+| Access-SW20     | VLAN 20        | 192.168.20.10   |
+| Access-SW30     | VLAN 30        | 192.168.30.10   |
+| Access-SW40     | VLAN 40        | 192.168.40.10   |
 
 ---
 
-## 🔹 Key Commands & Outputs
+## 🔹 CDP Neighbors Verification
 
-### 1️⃣ Show CDP Neighbors
-```
-Device ID    Local Intrfce   Holdtme    Capability   Platform    Port ID
-Switch       Fas 0/7         159        S           2960        Fas 0/1
-me           Fas 0/3         159                    3560        Fas 0/1
-Switch       Fas 0/5         159        S           2960        Fas 0/1
-Switch       Fas 0/6         159        S           2960        Fas 0/1
-mo           Fas 0/4         159        S           2960        Fas 0/1
-```
+### **MLS-Core-1**
 
-### 2️⃣ Show VLAN Brief
 ```
-VLAN Name          Status    Ports
-1    default       active    Fa0/2, Fa0/3, Fa0/4, Fa0/7 ...
-10   VLAN0010      active
-20   VLAN0020      active
-30   VLAN0030      active
-40   VLAN0040      active
+Device ID        Local Intrfce  Holdtme  Capability  Platform  Port ID
+Access-SW20     Fa0/5           139      S          2960      Fa0/1
+MLS-Core-2      Fa0/1           139                 3560      Fa0/1
+Access-SW10     Fa0/6           139      S          2960      Fa0/1
 ```
 
-### 3️⃣ Show IP Route
+### **MLS-Core-2**
+
 ```
-Gateway of last resort is not set
-C    192.168.1.0/24  is directly connected, Vlan1
-C    192.168.10.0/24 is directly connected, Vlan10
-C    192.168.20.0/24 is directly connected, Vlan20
-C    192.168.30.0/24 is directly connected, Vlan30
-C    192.168.40.0/24 is directly connected, Vlan40
+Device ID        Local Intrfce  Holdtme  Capability  Platform  Port ID
+Access-SW30     Fa0/2           162      S          2960      Fa0/1
+Access-SW40     Fa0/3           162      S          2960      Fa0/1
+MLS-Core-1      Fa0/1           162                 3560      Fa0/1
 ```
 
 ---
 
-## ✅ Project Features
-- Configured **CDP protocol** for device discovery  
-- Implemented **VLANs 10, 20, 30, 40** with Inter-VLAN routing  
-- Verified connectivity using `ping` between VLAN hosts  
-- Documented using `show` commands for validation
+## ✅ Project Notes
+- CDP successfully discovered all neighbors between Core and Access Switches.
+- Inter-VLAN routing is configured on MLS devices.
+- Trunk ports are using **802.1Q encapsulation**.
+- Each Access Switch belongs to a specific VLAN and is reachable via its MLS.
 
 ---
 
-## 📂 Files Included
-- `CDP-Protocol-Network.pkt` → Packet Tracer file
-- `README.md` → Project Documentation
-- `topology.png` → Network Topology Screenshot
-
----
-
-## 🏁 Conclusion
-This project successfully demonstrates:  
-- Using **CDP** to discover connected devices  
-- Configuring **VLANs & Inter-VLAN routing**  
-- Verifying network connectivity in a professional setup
+## 📂 Repository Topics
+`Cisco` `Networking` `CCNA` `PacketTracer` `CDP` `Layer2` `Switching`
